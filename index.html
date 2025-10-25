@@ -1,287 +1,288 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Office Attendance Calculator (HSBC Style)</title>
-        <!-- Load Tailwind CSS for styling -->
-        <script src="https://cdn.tailwindcss.com"></script>
-        <style>
-            /* Use Inter font - a clean, corporate-friendly sans-serif */
-            body {
-                font-family: "Inter", sans-serif;
-            }
-            input[type="checkbox"], input[type="radio"] {
-                display: none; /* Hide the actual checkbox/radio */
-            }
-            
-            /* Custom Checkbox style for Days (HSBC Red Theme) */
-            .day-label {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                cursor: pointer;
-                padding: 0.75rem 0.5rem;
-                border: 2px solid #e5e7eb; /* gray-200 */
-                border-radius: 0.375rem; /* rounded-md (sharper) */
-                transition: all 0.2s ease;
-                min-width: 50px;
-            }
-            .day-label:hover {
-                background-color: #f3f4f6; /* gray-100 */
-            }
-            input[type="checkbox"]:checked + .day-label {
-                background-color: #fee2e2; /* red-50 */
-                border-color: #dc2626; /* red-600 */
-                color: #b91c1c; /* red-700 */
-            }
-            input[type="checkbox"]:checked + .day-label .day-name {
-                font-weight: 600;
-            }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- *** TEXT CHANGE HERE *** -->
+    <title>Office Attendance Calculator</title>
+    <!-- Load Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Use Inter font - a clean, corporate-friendly sans-serif */
+        body {
+            font-family: "Inter", sans-serif;
+        }
+        input[type="checkbox"], input[type="radio"] {
+            display: none; /* Hide the actual checkbox/radio */
+        }
+        
+        /* Custom Checkbox style for Days (HSBC Red Theme) */
+        .day-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 0.75rem 0.5rem;
+            border: 2px solid #e5e7eb; /* gray-200 */
+            border-radius: 0.375rem; /* rounded-md (sharper) */
+            transition: all 0.2s ease;
+            min-width: 50px;
+        }
+        .day-label:hover {
+            background-color: #f3f4f6; /* gray-100 */
+        }
+        input[type="checkbox"]:checked + .day-label {
+            background-color: #fee2e2; /* red-50 */
+            border-color: #dc2626; /* red-600 */
+            color: #b91c1c; /* red-700 */
+        }
+        input[type="checkbox"]:checked + .day-label .day-name {
+            font-weight: 600;
+        }
 
-            /* Custom Radio button style for Percentage (HSBC Red Theme) */
-            .pct-label {
-                flex: 1;
-                text-align: center;
-                cursor: pointer;
-                padding: 0.75rem 0.5rem;
-                border: 2px solid #e5e7eb; /* gray-200 */
-                border-radius: 0.375rem; /* rounded-md (sharper) */
-                transition: all 0.2s ease;
-                font-weight: 500;
-                color: #374151; /* gray-700 */
-            }
-            .pct-label:hover {
-                background-color: #f3f4f6; /* gray-100 */
-            }
-            input[type="radio"]:checked + .pct-label {
-                background-color: #fee2e2; /* red-50 */
-                border-color: #dc2626; /* red-600 */
-                color: #b91c1c; /* red-700 */
-                font-weight: 600;
-            }
-            .radio-group {
-                display: flex;
-                gap: 0.5rem;
-            }
+        /* Custom Radio button style for Percentage (HSBC Red Theme) */
+        .pct-label {
+            flex: 1;
+            text-align: center;
+            cursor: pointer;
+            padding: 0.75rem 0.5rem;
+            border: 2px solid #e5e7eb; /* gray-200 */
+            border-radius: 0.375rem; /* rounded-md (sharper) */
+            transition: all 0.2s ease;
+            font-weight: 500;
+            color: #374151; /* gray-700 */
+        }
+        .pct-label:hover {
+            background-color: #f3f4f6; /* gray-100 */
+        }
+        input[type="radio"]:checked + .pct-label {
+            background-color: #fee2e2; /* red-50 */
+            border-color: #dc2626; /* red-600 */
+            color: #b91c1c; /* red-700 */
+            font-weight: 600;
+        }
+        .radio-group {
+            display: flex;
+            gap: 0.5rem;
+        }
 
-            /* Ensure number input spin buttons are visible */
-            input[type=number]::-webkit-inner-spin-button, 
-            input[type=number]::-webkit-outer-spin-button { 
-                opacity: 1;
-            }
-        </style>
-    </head>
-    <body class="bg-gray-100 flex items-center justify-center min-h-screen py-8">
+        /* Ensure number input spin buttons are visible */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen py-8">
 
-        <!-- Sharpened corners (rounded-lg) and more subtle shadow (shadow-md) -->
-        <div class="bg-white p-6 sm:p-8 rounded-lg shadow-md w-full max-w-2xl mx-4">
-            <!-- Corporate-style header with red accent line -->
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 pb-4 border-b-4 border-red-600">
-                Office Attendance Calculator
-            </h1>
+    <!-- Sharpened corners (rounded-lg) and more subtle shadow (shadow-md) -->
+    <div class="bg-white p-6 sm:p-8 rounded-lg shadow-md w-full max-w-2xl mx-4">
+        <!-- Corporate-style header with red accent line -->
+        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-8 pb-4 border-b-4 border-red-600">
+            Office Attendance Calculator
+        </h1>
 
-            <!-- Inputs Section: Month, Year, Leave -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
-                <div>
-                    <label for="month" class="block text-sm font-medium text-gray-700 mb-1">Month</label>
-                    <!-- Sharpened corners (rounded-md) and red focus ring -->
-                    <select id="month" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-red-600 focus:border-red-600">
-                        <!-- Months will be populated by JS -->
-                    </select>
-                </div>
-                <div>
-                    <label for="year" class="block text-sm font-medium text-gray-700 mb-1">Year</label>
-                    <select id="year" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-red-600 focus:border-red-600">
-                        <!-- Years will be populated by JS -->
-                    </select>
-                </div>
-                <div>
-                    <label for="leave-days" class="block text-sm font-medium text-gray-700 mb-1">Leave Days</label>
-                    <input type="number" id="leave-days" value="0" min="0" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-red-600 focus:border-red-600">
-                </div>
+        <!-- Inputs Section: Month, Year, Leave -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+            <div>
+                <label for="month" class="block text-sm font-medium text-gray-700 mb-1">Month</label>
+                <!-- Sharpened corners (rounded-md) and red focus ring -->
+                <select id="month" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-red-600 focus:border-red-600">
+                    <!-- Months will be populated by JS -->
+                </select>
             </div>
-            
-            <!-- Percentage Expectation Selection -->
-            <div class="mb-8">
-                <label class="block text-base font-medium text-gray-800 mb-3">Attendance Expectation</label>
-                <div class="radio-group">
-                    <input type="radio" id="pct-20" name="percentage" value="0.2" class="pct-input">
-                    <label for="pct-20" class="pct-label">20%</label>
-                    
-                    <input type="radio" id="pct-40" name="percentage" value="0.4" class="pct-input">
-                    <label for="pct-40" class="pct-label">40%</label>
-                    
-                    <input type="radio" id="pct-60" name="percentage" value="0.6" class="pct-input" checked>
-                    <label for="pct-60" class="pct-label">60%</label>
-                </div>
+            <div>
+                <label for="year" class="block text-sm font-medium text-gray-700 mb-1">Year</label>
+                <select id="year" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-red-600 focus:border-red-600">
+                    <!-- Years will be populated by JS -->
+                </select>
             </div>
-
-            <!-- Working Pattern Selection -->
-            <div class="mb-8">
-                <label class="block text-base font-medium text-gray-800 mb-3">My Weekly Working Pattern</label>
-                <div class="grid grid-cols-3 sm:grid-cols-7 gap-2">
-                    <input type="checkbox" id="day-mon" class="day-input" value="1">
-                    <label for="day-mon" class="day-label"><span class="day-name text-sm font-medium">Mon</span></label>
-                    
-                    <input type="checkbox" id="day-tue" class="day-input" value="2">
-                    <label for="day-tue" class="day-label"><span class="day-name text-sm font-medium">Tue</span></label>
-                    
-                    <input type="checkbox" id="day-wed" class="day-input" value="3">
-                    <label for="day-wed" class="day-label"><span class="day-name text-sm font-medium">Wed</span></label>
-                    
-                    <input type="checkbox" id="day-thu" class="day-input" value="4">
-                    <label for="day-thu" class="day-label"><span class="day-name text-sm font-medium">Thu</span></label>
-                    
-                    <input type="checkbox" id="day-fri" class="day-input" value="5">
-                    <label for="day-fri" class="day-label"><span class="day-name text-sm font-medium">Fri</span></label>
-                    
-                    <input type="checkbox" id="day-sat" class="day-input" value="6">
-                    <label for="day-sat" class="day-label"><span class="day-name text-sm font-medium">Sat</span></label>
-                    
-                    <input type="checkbox" id="day-sun" class="day-input" value="0">
-                    <label for="day-sun" class="day-label"><span class="day-name text-sm font-medium">Sun</span></label>
-                </div>
+            <div>
+                <label for="leave-days" class="block text-sm font-medium text-gray-700 mb-1">Leave Days</label>
+                <input type="number" id="leave-days" value="0" min="0" class="w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-red-600 focus:border-red-600">
             </div>
-
-            <!-- Results Section (HSBC Red Theme) -->
-            <div class="bg-gray-50 border-l-4 border-red-600 p-6 rounded-md">
-                <div class="flex flex-col sm:flex-row sm:justify-around text-center">
-                    <!-- Net Working Days -->
-                    <div class="mb-4 sm:mb-0">
-                        <div class="text-sm font-medium text-gray-700 mb-1">Net Working Days</div>
-                        <!-- Main numbers are now red -->
-                        <div id="net-days" class="text-4xl font-bold text-red-600">0</div>
-                    </div>
-                    <!-- Required Office Days -->
-                    <div>
-                        <div id="office-days-label" class="text-sm font-medium text-gray-700 mb-1">Required Office Days (60%)</div>
-                        <div id="office-days" class="text-4xl font-bold text-red-600">0</div>
-                    </div>
-                </div>
+        </div>
+        
+        <!-- Percentage Expectation Selection -->
+        <div class="mb-8">
+            <label class="block text-base font-medium text-gray-800 mb-3">Attendance Expectation</label>
+            <div class="radio-group">
+                <input type="radio" id="pct-20" name="percentage" value="0.2" class="pct-input">
+                <label for="pct-20" class="pct-label">20%</label>
+                
+                <input type="radio" id="pct-40" name="percentage" value="0.4" class="pct-input">
+                <label for="pct-40" class="pct-label">40%</label>
+                
+                <input type="radio" id="pct-60" name="percentage" value="0.6" class="pct-input" checked>
+                <label for="pct-60" class="pct-label">60%</label>
             </div>
-
         </div>
 
-        <script>
-            // Get all interactive elements
-            const monthSelect = document.getElementById('month');
-            const yearSelect = document.getElementById('year');
-            const leaveDaysInput = document.getElementById('leave-days');
-            const dayCheckboxes = document.querySelectorAll('.day-input');
-            const pctRadios = document.querySelectorAll('.pct-input');
+        <!-- Working Pattern Selection -->
+        <div class="mb-8">
+            <label class="block text-base font-medium text-gray-800 mb-3">My Weekly Working Pattern</label>
+            <div class="grid grid-cols-3 sm:grid-cols-7 gap-2">
+                <input type="checkbox" id="day-mon" class="day-input" value="1">
+                <label for="day-mon" class="day-label"><span class="day-name text-sm font-medium">Mon</span></label>
+                
+                <input type="checkbox" id="day-tue" class="day-input" value="2">
+                <label for="day-tue" class="day-label"><span class="day-name text-sm font-medium">Tue</span></label>
+                
+                <input type="checkbox" id="day-wed" class="day-input" value="3">
+                <label for="day-wed" class="day-label"><span class="day-name text-sm font-medium">Wed</span></label>
+                
+                <input type="checkbox" id="day-thu" class="day-input" value="4">
+                <label for="day-thu" class="day-label"><span class="day-name text-sm font-medium">Thu</span></label>
+                
+                <input type="checkbox" id="day-fri" class="day-input" value="5">
+                <label for="day-fri" class="day-label"><span class="day-name text-sm font-medium">Fri</span></label>
+                
+                <input type="checkbox" id="day-sat" class="day-input" value="6">
+                <label for="day-sat" class="day-label"><span class="day-name text-sm font-medium">Sat</span></label>
+                
+                <input type="checkbox" id="day-sun" class="day-input" value="0">
+                <label for="day-sun" class="day-label"><span class="day-name text-sm font-medium">Sun</span></label>
+            </div>
+        </div>
+
+        <!-- Results Section (HSBC Red Theme) -->
+        <div class="bg-gray-50 border-l-4 border-red-600 p-6 rounded-md">
+            <div class="flex flex-col sm:flex-row sm:justify-around text-center">
+                <!-- Net Working Days -->
+                <div class="mb-4 sm:mb-0">
+                    <div class="text-sm font-medium text-gray-700 mb-1">Net Working Days</div>
+                    <!-- Main numbers are now red -->
+                    <div id="net-days" class="text-4xl font-bold text-red-600">0</div>
+                </div>
+                <!-- Required Office Days -->
+                <div>
+                    <div id="office-days-label" class="text-sm font-medium text-gray-700 mb-1">Required Office Days (60%)</div>
+                    <div id="office-days" class="text-4xl font-bold text-red-600">0</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Get all interactive elements
+        const monthSelect = document.getElementById('month');
+        const yearSelect = document.getElementById('year');
+        const leaveDaysInput = document.getElementById('leave-days');
+        const dayCheckboxes = document.querySelectorAll('.day-input');
+        const pctRadios = document.querySelectorAll('.pct-input');
+        
+        // Get all output elements
+        const netDaysEl = document.getElementById('net-days');
+        const officeDaysEl = document.getElementById('office-days');
+        const officeDaysLabelEl = document.getElementById('office-days-label');
+
+        const months = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        // 1. Initialize
+        function initialize() {
+            const today = new Date();
+            const currentYear = today.getFullYear();
+            const currentMonth = today.getMonth();
             
-            // Get all output elements
-            const netDaysEl = document.getElementById('net-days');
-            const officeDaysEl = document.getElementById('office-days');
-            const officeDaysLabelEl = document.getElementById('office-days-label');
+            // Populate months
+            months.forEach((month, index) => {
+                const option = document.createElement('option');
+                option.value = index; // 0 = Jan, 1 = Feb, etc.
+                option.textContent = month;
+                monthSelect.appendChild(option);
+            });
+            
+            // Populate years (current year -5 to +5)
+            for (let i = currentYear - 5; i <= currentYear + 5; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                yearSelect.appendChild(option);
+            }
+            
+            // Set current month and year
+            monthSelect.value = currentMonth;
+            yearSelect.value = currentYear;
+            
+            // Set default working pattern (Mon-Fri)
+            document.getElementById('day-mon').checked = true;
+            document.getElementById('day-tue').checked = true;
+            document.getElementById('day-wed').checked = true;
+            document.getElementById('day-thu').checked = true;
+            document.getElementById('day-fri').checked = true;
 
-            const months = [
-                "January", "February", "March", "April", "May", "June",
-                "July", "August", "September", "October", "November", "December"
-            ];
+            // Add all event listeners
+            monthSelect.addEventListener('change', calculate);
+            yearSelect.addEventListener('change', calculate);
+            leaveDaysInput.addEventListener('input', calculate); 
+            dayCheckboxes.forEach(checkbox => checkbox.addEventListener('change', calculate));
+            pctRadios.forEach(radio => radio.addEventListener('change', calculate));
 
-            // 1. Initialize
-            function initialize() {
-                const today = new Date();
-                const currentYear = today.getFullYear();
-                const currentMonth = today.getMonth();
-                
-                // Populate months
-                months.forEach((month, index) => {
-                    const option = document.createElement('option');
-                    option.value = index; // 0 = Jan, 1 = Feb, etc.
-                    option.textContent = month;
-                    monthSelect.appendChild(option);
-                });
-                
-                // Populate years (current year -5 to +5)
-                for (let i = currentYear - 5; i <= currentYear + 5; i++) {
-                    const option = document.createElement('option');
-                    option.value = i;
-                    option.textContent = i;
-                    yearSelect.appendChild(option);
-                }
-                
-                // Set current month and year
-                monthSelect.value = currentMonth;
-                yearSelect.value = currentYear;
-                
-                // Set default working pattern (Mon-Fri)
-                document.getElementById('day-mon').checked = true;
-                document.getElementById('day-tue').checked = true;
-                document.getElementById('day-wed').checked = true;
-                document.getElementById('day-thu').checked = true;
-                document.getElementById('day-fri').checked = true;
+            // Initial calculation on load
+            calculate();
+        }
 
-                // Add all event listeners
-                monthSelect.addEventListener('change', calculate);
-                yearSelect.addEventListener('change', calculate);
-                leaveDaysInput.addEventListener('input', calculate); 
-                dayCheckboxes.forEach(checkbox => checkbox.addEventListener('change', calculate));
-                pctRadios.forEach(radio => radio.addEventListener('change', calculate));
+        // 2. Calculation Logic
+        function calculate() {
+            // --- 1. GET ALL INPUTS ---
+            const month = parseInt(monthSelect.value);
+            const year = parseInt(yearSelect.value);
+            let leaveDays = parseInt(leaveDaysInput.value);
+            
+            // Get selected percentage
+            const selectedPctEl = document.querySelector('.pct-input:checked');
+            const percentage = selectedPctEl ? parseFloat(selectedPctEl.value) : 0.6; // Default to 0.6
 
-                // Initial calculation on load
-                calculate();
+            // Validate leave days
+            if (isNaN(leaveDays) || leaveDays < 0) {
+                leaveDays = 0;
             }
 
-            // 2. Calculation Logic
-            function calculate() {
-                // --- 1. GET ALL INPUTS ---
-                const month = parseInt(monthSelect.value);
-                const year = parseInt(yearSelect.value);
-                let leaveDays = parseInt(leaveDaysInput.value);
+            // Get selected working days pattern
+            const workingDaysPattern = new Set();
+            dayCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    workingDaysPattern.add(parseInt(checkbox.value));
+                }
+            });
+
+            // --- 2. CALCULATE TOTAL & NET DAYS ---
+            let totalWorkingDays = 0;
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            // Loop through each day of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = new Date(year, month, day);
+                const dayOfWeek = date.getDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
                 
-                // Get selected percentage
-                const selectedPctEl = document.querySelector('.pct-input:checked');
-                const percentage = selectedPctEl ? parseFloat(selectedPctEl.value) : 0.6; // Default to 0.6
-
-                // Validate leave days
-                if (isNaN(leaveDays) || leaveDays < 0) {
-                    leaveDays = 0;
+                if (workingDaysPattern.has(dayOfWeek)) {
+                    totalWorkingDays++;
                 }
-
-                // Get selected working days pattern
-                const workingDaysPattern = new Set();
-                dayCheckboxes.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        workingDaysPattern.add(parseInt(checkbox.value));
-                    }
-                });
-
-                // --- 2. CALCULATE TOTAL & NET DAYS ---
-                let totalWorkingDays = 0;
-                const daysInMonth = new Date(year, month + 1, 0).getDate();
-
-                // Loop through each day of the month
-                for (let day = 1; day <= daysInMonth; day++) {
-                    const date = new Date(year, month, day);
-                    const dayOfWeek = date.getDay(); // 0=Sunday, 1=Monday, ..., 6=Saturday
-                    
-                    if (workingDaysPattern.has(dayOfWeek)) {
-                        totalWorkingDays++;
-                    }
-                }
-                
-                // Subtract leave days
-                let netWorkingDays = totalWorkingDays - leaveDays;
-                if (netWorkingDays < 0) {
-                    netWorkingDays = 0; // Can't have negative working days
-                }
-
-                // --- 3. CALCULATE REQUIRED DAYS ---
-                const requiredOfficeDays = Math.ceil(netWorkingDays * percentage);
-
-                // --- 4. UPDATE UI ---
-                netDaysEl.textContent = netWorkingDays;
-                officeDaysEl.textContent = requiredOfficeDays;
-                officeDaysLabelEl.textContent = `Required Office Days (${percentage * 100}%)`;
+            }
+            
+            // Subtract leave days
+            let netWorkingDays = totalWorkingDays - leaveDays;
+            if (netWorkingDays < 0) {
+                netWorkingDays = 0; // Can't have negative working days
             }
 
-            // Run on page load
-            initialize();
-        </script>
+            // --- 3. CALCULATE REQUIRED DAYS ---
+            const requiredOfficeDays = Math.ceil(netWorkingDays * percentage);
 
-    </body>
-    </html>
-    
+            // --- 4. UPDATE UI ---
+            netDaysEl.textContent = netWorkingDays;
+            officeDaysEl.textContent = requiredOfficeDays;
+            officeDaysLabelEl.textContent = `Required Office Days (${percentage * 100}%)`;
+        }
+
+        // Run on page load
+        initialize();
+    </script>
+
+</body>
+</html>
+
