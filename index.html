@@ -154,9 +154,9 @@
                     <!-- Main numbers are now red -->
                     <div id="net-days" class="text-4xl font-bold text-red-600">0</div>
                 </div>
-                <!-- Required Office Days -->
+                <!-- Expected Office Days -->
                 <div>
-                    <div id="office-days-label" class="text-sm font-medium text-gray-700 mb-1">Required Office Days (60%)</div>
+                    <div id="office-days-label" class="text-sm font-medium text-gray-700 mb-1">Expected Office Days (60%)</div>
                     <div id="office-days" class="text-4xl font-bold text-red-600">0</div>
                 </div>
             </div>
@@ -270,13 +270,13 @@
                 netWorkingDays = 0; // Can't have negative working days
             }
 
-            // --- 3. CALCULATE REQUIRED DAYS ---
-            const requiredOfficeDays = Math.ceil(netWorkingDays * percentage);
+            // --- 3. CALCULATE Expected DAYS ---
+            const ExpectedOfficeDays = Math.ceil(netWorkingDays * percentage);
 
             // --- 4. UPDATE UI ---
             netDaysEl.textContent = netWorkingDays;
-            officeDaysEl.textContent = requiredOfficeDays;
-            officeDaysLabelEl.textContent = `Required Office Days (${percentage * 100}%)`;
+            officeDaysEl.textContent = ExpectedOfficeDays;
+            officeDaysLabelEl.textContent = `Expected Office Days (${percentage * 100}%)`;
         }
 
         // Run on page load
